@@ -19,7 +19,7 @@ export default function Home({initialLineItems}) {
       <LineItemForm />
       <ul>
         {lineItems && lineItems.map(lineItem => (
-          <LineItem key={lineItem.id} lineItem={lineItem.fields}/>
+          <LineItem key={lineItem.id} lineItem={lineItem}/>
         ))}
       </ul>
     </main>

@@ -21,12 +21,29 @@ const LineItemsProvider = ({children}) => {
     }
   }
 
+  const deleteLineItem = async (id) => {
+    try {
+      await fetch('/api/deleteLineItem', {
+        method: 'Delete',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({id})
+      });
+
+      setLineItems(prevLineItems => {
+        return prevLineItems.filter(lineItem => lineItem.id !== id);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <LineItemsContext.Provider
       value={{
         lineItems,
         setLineItems,
         addLineItem,
+        deleteLineItem,
       }}
     >
       {children}

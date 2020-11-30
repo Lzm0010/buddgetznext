@@ -1,17 +1,37 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {LineItemsContext} from '../contexts/lineItemsContext';
 
 export default function LineItem ({lineItem}) {
+
+  const {updateLineItem, deleteLineItem} = useContext(LineItemsContext);
+
+  const handleEdit = () => {
+
+  }
+
   return (
-    <>
+    <li>
       <div>
-        {lineItem.description}
+        {lineItem.fields.description}
       </div>
       <div>
-        {lineItem.date}
+        {lineItem.fields.date}
       </div>
       <div>
-        {lineItem.total}
+        {lineItem.fields.total}
       </div>
-    </>
+      <button 
+        type="button"
+        onClick={handleEdit}
+      >
+        Update
+      </button>
+      <button
+        type="button"
+        onClick={() => deleteLineItem(lineItem.id)} 
+      >
+        Delete
+      </button>
+    </li>
   )
 }
