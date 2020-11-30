@@ -1,17 +1,18 @@
 import React from 'react';
+import NavbarStyles from '../styles/NavbarStyles';
 
 export default function Navbar(){
   return (
-    <nav>
-      <div>
+    <NavbarStyles>
+      <a>
         Buddgetz
-      </div>
+      </a>
       <a href="/api/login">
         Login
       </a>
       <a href="/api/login">
         Logout
       </a>
-    </nav>
+    </NavbarStyles>
   )
 }

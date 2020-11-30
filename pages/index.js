@@ -7,7 +7,6 @@ import LineItem from '../components/LineItem';
 export default function Home({initialLineItems}) {
   return (
     <main>
-      <h1>Dashboard</h1>
       <Navbar />
 
       {initialLineItems.map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem.fields}/>)}
