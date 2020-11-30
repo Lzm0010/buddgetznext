@@ -8,7 +8,7 @@ export default function Home({initialLineItems}) {
   return (
     <main>
       <Navbar />
-
+      <LineItemForm />
       {initialLineItems.map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem.fields}/>)}
 
     </main>
