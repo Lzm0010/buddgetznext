@@ -6,6 +6,7 @@ export default async(req, res) => {
     const records = await table.update([
       {id, fields}
     ]);
+
     res.statusCode = 200;
     res.json(getMinifiedRecord(records[0]));
   } catch (err) {

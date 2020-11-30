@@ -21,6 +21,25 @@ const LineItemsProvider = ({children}) => {
     }
   }
 
+  const updateLineItem = async (updatedLineItem) => {
+    try {
+      const res = await fetch('/api/updateLineItem', {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(updatedLineItem)
+      });
+      await res.json();
+      setLineItems(prevLineItems => {
+        const existingItems = [...prevLineItems];
+        const existingItem = existingItems.find(lineItem => lineItem.id === updatedLineItem.id);
+        existingItem.fields = updatedLineItem.fields;
+        return existingItems;
+      });
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
   const deleteLineItem = async (id) => {
     try {
       await fetch('/api/deleteLineItem', {
@@ -44,6 +63,7 @@ const LineItemsProvider = ({children}) => {
         setLineItems,
         addLineItem,
         deleteLineItem,
+        updateLineItem,
       }}
     >
       {children}
