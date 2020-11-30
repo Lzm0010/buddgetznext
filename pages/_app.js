@@ -1,10 +1,13 @@
 import Page from '../components/Page';
+import {LineItemsProvider} from '../contexts/lineItemsContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-    <Page>
-      <Component {...pageProps} />
-    </Page>
+    <LineItemsProvider>
+      <Page>
+        <Component {...pageProps} />
+      </Page>
+    </LineItemsProvider>
   )
 }
 

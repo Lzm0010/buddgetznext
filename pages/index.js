@@ -1,16 +1,27 @@
+import {useEffect, useContext} from 'react';
 import {table, minifyRecords} from './api/utils/Airtable';
 import Navbar from '../components/Navbar';
 import LineItemForm from '../components/LineItemForm';
+import {LineItemsContext} from '../contexts/lineItemsContext';
 import LineItem from '../components/LineItem';
 
 
 export default function Home({initialLineItems}) {
+  const {lineItems, setLineItems} = useContext(LineItemsContext);
+
+  useEffect(() => {
+    setLineItems(initialLineItems);
+  }, [])
+
   return (
     <main>
       <Navbar />
       <LineItemForm />
-      {initialLineItems.map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem.fields}/>)}
-
+      <ul>
+        {lineItems && lineItems.map(lineItem => (
+          <LineItem key={lineItem.id} lineItem={lineItem.fields}/>
+        ))}
+      </ul>
     </main>
   )
 }

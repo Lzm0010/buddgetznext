@@ -5,8 +5,13 @@ export default function LineItemForm () {
   const [date, setDate] = useState('');
   const [total, setTotal] = useState(0);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <input 
         name="description" 
         placeholder="description" 
