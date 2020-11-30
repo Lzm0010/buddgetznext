@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
+import {LineItemsContext} from '../contexts/lineItemsContext';
 
 export default function LineItemForm () {
+  const {addLineItem} = useContext(LineItemsContext);
+
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [total, setTotal] = useState(0);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    addLineItem({description, date, total});
+    setDescription('');
+    setDate('');
+    setTotal('');
   }
 
   return (
