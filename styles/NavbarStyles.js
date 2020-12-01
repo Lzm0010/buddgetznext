@@ -28,16 +28,15 @@ const NavbarStyles = styled.ul`
         &:after {
             width: calc(100% - 60px);
         }
-    @media(max-width: 700px) {
-        width: calc(100% - 10px);
+        @media(max-width: 700px) {
+            width: calc(100% - 10px);
+        }
     }
-    }
-    }
-    @media(max-width: 1300px) {
+  }
+  @media(max-width: 1300px) {
         width: 100%;
         justify-content: center;
         font-size: 1.5rem;
-    }
   }
 `;
 

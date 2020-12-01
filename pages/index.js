@@ -1,14 +1,15 @@
-import {useEffect, useContext} from 'react';
+import {useEffect, useContext, useState} from 'react';
 import {table, minifyRecords} from './api/utils/Airtable';
 import Navbar from '../components/Navbar';
+import Budget from '../components/Budget';
 import LineItemForm from '../components/LineItemForm';
 import {LineItemsContext} from '../contexts/lineItemsContext';
-import LineItem from '../components/LineItem';
 import auth0 from './api/utils/auth0';
 
 
 export default function Home({initialLineItems, user}) {
   const {lineItems, setLineItems} = useContext(LineItemsContext);
+  // const [month, setMonth] = useState(new Date().getMonth() +1)
 
   useEffect(() => {
     setLineItems(initialLineItems);
@@ -21,11 +22,7 @@ export default function Home({initialLineItems, user}) {
         user && (
           <>
             <LineItemForm />
-            <ul>
-              {lineItems && lineItems.map(lineItem => (
-                <LineItem key={lineItem.id} lineItem={lineItem}/>
-              ))}
-            </ul>
+            <Budget lineItems={lineItems}/>
           </>
         )
       }

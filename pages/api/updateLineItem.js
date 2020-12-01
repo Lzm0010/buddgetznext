@@ -1,7 +1,11 @@
 import {table, getMinifiedRecord} from './utils/Airtable';
+import OwnsRecord from './middleware/OwnsRecord';
+// import auth0 from './utils/auth0';     
 
-export default async(req, res) => {
+export default OwnsRecord(async(req, res) => {
   const {id, fields} = req.body;
+  // const {user} = await auth0.getSession(req);
+
   try {
     const records = await table.update([
       {id, fields}
@@ -13,4 +17,4 @@ export default async(req, res) => {
     res.statusCode = 500;
     res.json({msg: 'something went wrong'});
   }
-}
+});

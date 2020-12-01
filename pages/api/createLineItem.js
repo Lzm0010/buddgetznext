@@ -1,11 +1,14 @@
 import {table} from './utils/Airtable';
+import auth0 from './utils/auth0';
 
-export default async(req, res) => {
+export default auth0.requireAuthentication(async(req, res) => {
   const {description, date, total, category, itemType, subcategory} = req.body;
+  const {user} = await auth0.getSession(req);
+
   try {
     const records = await table.create([
       {fields: {
-        description, date, total, category, itemType, subcategory
+        description, date, total, category, itemType, subcategory, userId: user.sub
       }}
     ]);
     const record = {
@@ -18,4 +21,4 @@ export default async(req, res) => {
     res.statusCode = 500;
     res.json({msg: 'something went wrrong'});
   }
-}
+});

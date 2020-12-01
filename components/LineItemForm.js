@@ -10,7 +10,7 @@ export default function LineItemForm () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addLineItem({description, date, total});
+    addLineItem({description, date, total: Math.round(parseFloat(total) * 100) / 100});
     setDescription('');
     setDate('');
     setTotal('');
