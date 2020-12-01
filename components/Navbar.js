@@ -1,18 +1,25 @@
 import React from 'react';
 import NavbarStyles from '../styles/NavbarStyles';
 
-export default function Navbar(){
+export default function Navbar({user}){
   return (
     <NavbarStyles>
-      <a>
+      <p>
         Buddgetz
-      </a>
-      <a href="/api/login">
-        Login
-      </a>
-      <a href="/api/login">
-        Logout
-      </a>
+      </p>
+      {
+        user && (
+        <a href="/api/logout">
+          Logout
+        </a>
+      )}
+      {
+        !user && (
+        <a href="/api/login">
+          Login
+        </a>
+
+      )}
     </NavbarStyles>
   )
 }

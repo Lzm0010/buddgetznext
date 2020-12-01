@@ -18,7 +18,7 @@ export default function LineItem ({lineItem}) {
       ...lineItem.fields,
       description,
       date,
-      total: parseFloat(total)
+      total: Math.round(parseFloat(total) * 100) / 100
     }
     const updatedLineItem = {id: lineItem.id, fields: updatedFields};
     updateLineItem(updatedLineItem);
