@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import Budget from '../components/Budget';
 import LineItemForm from '../components/LineItemForm';
 import {LineItemsContext} from '../contexts/lineItemsContext';
+import PLink from '../components/PLink';
 import auth0 from './api/utils/auth0';
 
 
@@ -21,6 +22,7 @@ export default function Home({initialLineItems, user}) {
       {
         user && (
           <>
+            <PLink/>
             <LineItemForm />
             <Budget lineItems={lineItems}/>
           </>
