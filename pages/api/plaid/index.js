@@ -13,7 +13,7 @@ export default auth0.requireAuthentication(async (req, res) => {
   const clientUserId = user.sub;
 
   try {
-    client.createLinkToken({
+    const linkTokenResponse = await client.createLinkToken({
       user: {
         client_user_id: clientUserId,
       },
@@ -21,16 +21,11 @@ export default auth0.requireAuthentication(async (req, res) => {
       products: ['transactions'],
       country_codes: ['US'],
       language: 'en',
-    }, function (error, createTokenResponse) {
-      if (error != null) {
-        prettyPrintResponse(error);
-        return res.json({
-          error: error,
-        });
-      }
-      res.statusCode = 200;
-      res.json(createTokenResponse);
     });
+
+    const link_token = linkTokenResponse.link_token;
+
+    res.json({link_token});
 
   } catch(err) {
     return res.send({error: err.message});
