@@ -1,14 +1,23 @@
 import React, {useCallback} from 'react';
 import {usePlaidLink} from 'react-plaid-link';
 
-export default function PLink ({token}) {
+export default function PLink ({token, setTransactions}) {
 
   const onSuccess = useCallback(
-    (token, metadata) => fetch('api/plaid', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({public_token: token, metadata}),
-    }),
+     async (token, metadata) => {
+        const res = await fetch('api/plaid', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({public_token: token, metadata}),
+        })
+
+        const transactions = await res.json();
+    
+        if (res.ok !== false) {
+          console.log(transactions);
+          setTransactions(transactions);
+        }
+    },
     []
   );
 

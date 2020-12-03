@@ -11,6 +11,7 @@ import plaid from 'plaid';
 
 export default function Home({initialLineItems, user, token}) {
   const {lineItems, setLineItems} = useContext(LineItemsContext);
+  const [transactions, setTransactions] = useState([]);
   // const [month, setMonth] = useState(new Date().getMonth() +1)
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function Home({initialLineItems, user, token}) {
       {
         user && (
           <>
-            <PLink token={token}/>
+            <PLink token={token} setTransactions={setTransactions}/>
             <LineItemForm />
             <Budget lineItems={lineItems}/>
           </>

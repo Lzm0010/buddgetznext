@@ -9,24 +9,48 @@ const client = new plaid.Client({
 });
 
 export default auth0.requireAuthentication(async (req, res) => {
-  const {user} = await auth0.getSession(req);
-  const clientUserId = user.sub;
-
+  const PUBLIC_TOKEN = req.body.public_token;
   try {
-    const linkTokenResponse = await client.createLinkToken({
-      user: {
-        client_user_id: clientUserId,
-      },
-      client_name: 'Buddgetz',
-      products: ['transactions'],
-      country_codes: ['US'],
-      language: 'en',
+    client.exchangePublicToken(PUBLIC_TOKEN,function (error, tokenResponse) {
+      if (error != null) {
+        var msg = 'Could not exchange public_token!';
+        console.log(msg + '\n' + JSON.stringify(error));
+        return res.json({
+          error: msg,
+        });
+      }
+      const ACCESS_TOKEN = tokenResponse.access_token;
+      const ITEM_ID = tokenResponse.item_id;
+      console.log(tokenResponse);
+      let startDate = moment()
+        .subtract(30, "days")
+        .format("YYYY-MM-DD");
+      let endDate = moment().format("YYYY-MM-DD");
+
+      client.getTransactions(
+        ACCESS_TOKEN,
+        startDate,
+        endDate,
+        {}, 
+        function(error, transactionsResponse) {
+          const { transactions } = transactionsResponse;
+          // TRANSACTIONS LOGGED BELOW 
+          console.log('transactions:', transactions);
+          res.json({
+            ok: true,
+            message: 'Success!',
+            access_token: ACCESS_TOKEN,
+            item_id: ITEM_ID,
+            transactions: transactions
+          })
+          
+        })
+      // res.json({
+      //   access_token: ACCESS_TOKEN,
+      //   item_id: ITEM_ID,
+      //   error: false,
+      // });
     });
-
-    const link_token = linkTokenResponse.link_token;
-
-    res.json({link_token});
-
   } catch(err) {
     return res.send({error: err.message});
   }
