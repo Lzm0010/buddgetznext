@@ -5,12 +5,24 @@ const LineItemsContext = createContext();
 const LineItemsProvider = ({children}) => {
   const [lineItems, setLineItems] = useState([]);
 
-  const addLineItem = async ({description, date, total}) => {
+  const addLineItem = async ({
+    description, 
+    date, 
+    total, 
+    transactionId, 
+    itemType
+  }) => {
     try {
       const res = await fetch('/api/createLineItem', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({description, date, total})
+        body: JSON.stringify({
+          description, 
+          date, 
+          total, 
+          transactionId,
+          itemType
+        })
       });
       const newItem = await res.json();
       setLineItems(prevLineItems => {

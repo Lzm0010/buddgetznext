@@ -1,7 +1,9 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {usePlaidLink} from 'react-plaid-link';
+import LineItemContext, { LineItemsContext } from '../contexts/lineItemsContext';
 
-export default function PLink ({token, setTransactions}) {
+export default function PLink ({token}) {
+  const {lineItems, addLineItem} = useContext(LineItemsContext);
 
   const onSuccess = useCallback(
      async (token, metadata) => {
@@ -11,11 +13,20 @@ export default function PLink ({token, setTransactions}) {
           body: JSON.stringify({public_token: token, metadata}),
         })
 
-        const transactions = await res.json();
+        const transactionResponse = await res.json();
     
         if (res.ok !== false) {
-          console.log(transactions);
-          setTransactions(transactions);
+          transactionResponse.transactions.forEach(trans => {
+            if (lineItems.find(li =>  li.transactionId === trans.transaction_id) === undefined) {
+              addLineItem({
+                transactionId: trans.transaction_id,
+                description: trans.name,
+                date: trans.date,
+                total: trans.amount,
+                itemType: 'actual'
+              })
+            }
+          });
         }
     },
     []
@@ -49,7 +60,7 @@ export default function PLink ({token, setTransactions}) {
       onClick={() => open()}
       disabled={!ready || error}
     >   
-      Connect a bank account
+      Upload Transactions from Bank Account
     </button>
   )
 }
