@@ -22,6 +22,7 @@ export default auth0.requireAuthentication(async (req, res) => {
       const ACCESS_TOKEN = tokenResponse.access_token;
       const ITEM_ID = tokenResponse.item_id;
       console.log(tokenResponse);
+
       let startDate = moment()
         .subtract(30, "days")
         .format("YYYY-MM-DD");
@@ -45,11 +46,6 @@ export default auth0.requireAuthentication(async (req, res) => {
           })
           
         })
-      // res.json({
-      //   access_token: ACCESS_TOKEN,
-      //   item_id: ITEM_ID,
-      //   error: false,
-      // });
     });
   } catch(err) {
     return res.send({error: err.message});

@@ -1,6 +1,5 @@
 import React from 'react';
 import LineItem from './LineItem';
-import BudgetStyles from '../styles/BudgetStyles';
 
 export default function Budget({lineItems}) {
   const actualLineItems = lineItems.filter(lineItem => (
@@ -11,9 +10,14 @@ export default function Budget({lineItems}) {
     lineItem.fields.itemType === 'projected'
   ));
 
+//   <div>
+//   {lineItems && projectedLineItems.map(lineItem => (
+//     <LineItem key={lineItem.id} lineItem={lineItem}/>
+//   ))}
+// </div>
 
   return (
-    <BudgetStyles>
+    <div>
       <div className="header">
           <div>
             Projected
@@ -28,22 +32,29 @@ export default function Budget({lineItems}) {
       <div className="table-body">
           <div className="projected"> 
               <div>
-                {lineItems && projectedLineItems.map(lineItem => (
-                  <LineItem key={lineItem.id} lineItem={lineItem}/>
-                ))}
+                Income
+              </div>
+              <div>
+                Expenses
               </div>
           </div>
           <div className="actual">
               <div>
-                {lineItems && actualLineItems.map(lineItem => (
-                  <LineItem key={lineItem.id} lineItem={lineItem}/>
-                ))}
+                Income
+              </div>
+              <div>
+                Expenses
               </div>
           </div>
           <div className="delta">
-
+              <div>
+                Income
+              </div>
+              <div>
+                Expenses
+              </div>
           </div>
       </div>
-    </BudgetStyles>
+    </div>
   );
 };

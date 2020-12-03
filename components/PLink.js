@@ -1,6 +1,6 @@
 import React, {useCallback, useContext} from 'react';
 import {usePlaidLink} from 'react-plaid-link';
-import LineItemContext, { LineItemsContext } from '../contexts/lineItemsContext';
+import { LineItemsContext } from '../contexts/lineItemsContext';
 
 export default function PLink ({token}) {
   const {lineItems, addLineItem} = useContext(LineItemsContext);

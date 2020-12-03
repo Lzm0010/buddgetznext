@@ -1,9 +1,8 @@
 import React from 'react';
-import NavbarStyles from '../styles/NavbarStyles';
 
 export default function Navbar({user}){
   return (
-    <NavbarStyles>
+    <nav>
       <p>
         Buddgetz
       </p>
@@ -20,6 +19,6 @@ export default function Navbar({user}){
         </a>
 
       )}
-    </NavbarStyles>
+    </nav>
   )
 }

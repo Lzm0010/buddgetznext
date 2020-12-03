@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react';
 import {LineItemsContext} from '../contexts/lineItemsContext';
-import LineItemStyles from '../styles/LineItemStyles';
 
 export default function LineItem ({lineItem}) {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,7 +26,7 @@ export default function LineItem ({lineItem}) {
   };
 
   return (
-    <LineItemStyles>
+    <li>
       {
         isEditing && (
           <>
@@ -86,6 +85,6 @@ export default function LineItem ({lineItem}) {
       >
         Delete
       </button>
-    </LineItemStyles>
+    </li>
   )
 }
