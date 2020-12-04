@@ -2,11 +2,11 @@ import {useEffect, useContext, useState} from 'react';
 import {table, minifyRecords} from './api/utils/Airtable';
 import Navbar from '../components/Navbar';
 import Budget from '../components/Budget';
-import LineItemForm from '../components/LineItemForm';
 import {LineItemsContext} from '../contexts/lineItemsContext';
-import PLink from '../components/PLink';
 import auth0 from './api/utils/auth0';
 import plaid from 'plaid';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 
 export default function Home({initialLineItems, user, token}) {
@@ -19,17 +19,24 @@ export default function Home({initialLineItems, user, token}) {
 
   return (
     <main>
-      <Navbar user={user}/>
-      {
-        user && (
-          <>
-            <PLink token={token} />
-            <LineItemForm />
-            <Budget lineItems={lineItems}/>
-          </>
-        )
-      }
-      {!user && <p>Login in to save your budgets!</p>}
+      <Container>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Navbar user={user} token={token}/>
+          </Grid>
+          <Grid item xs={12}>
+            {
+              user && (
+                <Grid>
+                  <Budget lineItems={lineItems}/>
+                </Grid>
+              )
+            }
+            {!user && <p>Login in to save your budgets!</p>}
+          </Grid>
+
+        </Grid>
+      </Container>
     </main>
   )
 }

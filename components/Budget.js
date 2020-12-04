@@ -1,5 +1,6 @@
 import React from 'react';
 import LineItem from './LineItem';
+import {Grid, Paper} from '@material-ui/core';
 
 export default function Budget({lineItems}) {
   const actualLineItems = lineItems.filter(lineItem => (
@@ -17,44 +18,49 @@ export default function Budget({lineItems}) {
 // </div>
 
   return (
-    <div>
-      <div className="header">
-          <div>
+    <Paper>
+      <Grid 
+        container
+        justify="center"
+        >
+          <Grid item xs={4}>
             Projected
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={4}>
             Actual
-          </div>
-          <div>
+          </Grid>
+          <Grid item xs={2}>
             Delta
-          </div>
-      </div>
-      <div className="table-body">
-          <div className="projected"> 
+          </Grid>
+      </Grid>
+      <Grid
+        container
+      >
+          <Grid item xs={4}> 
               <div>
                 Income
               </div>
               <div>
                 Expenses
               </div>
-          </div>
-          <div className="actual">
+          </Grid>
+          <Grid item xs={4}>
               <div>
                 Income
               </div>
               <div>
                 Expenses
               </div>
-          </div>
-          <div className="delta">
+          </Grid>
+          <Grid item xs={2}>
               <div>
                 Income
               </div>
               <div>
                 Expenses
               </div>
-          </div>
-      </div>
-    </div>
+          </Grid>
+      </Grid>
+    </Paper>
   );
 };

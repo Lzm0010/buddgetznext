@@ -1,6 +1,8 @@
 import React, {useCallback, useContext} from 'react';
 import {usePlaidLink} from 'react-plaid-link';
 import { LineItemsContext } from '../contexts/lineItemsContext';
+import Button from '@material-ui/core/Button';
+import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
 export default function PLink ({token}) {
   const {lineItems, addLineItem} = useContext(LineItemsContext);
@@ -55,12 +57,14 @@ export default function PLink ({token}) {
   const {open, ready, error} = usePlaidLink(config);
 
   return (
-    <button
-      type="button"
+    <Button
+      variant="contained"
+      color="secondary"
+      startIcon={<AccountBalanceIcon/>}
       onClick={() => open()}
       disabled={!ready || error}
     >   
-      Upload Transactions from Bank Account
-    </button>
+      Upload Transactions
+    </Button>
   )
 }

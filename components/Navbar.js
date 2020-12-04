@@ -1,24 +1,50 @@
 import React from 'react';
+import PLink from './PLink';
+import Button from '@material-ui/core/Button';
+import {Grid} from '@material-ui/core';
 
-export default function Navbar({user}){
+export default function Navbar({user, token}){
+
   return (
-    <nav>
-      <p>
-        Buddgetz
-      </p>
+    <Grid 
+      container
+      direction="row"
+      alignItems="baseline"
+      justify="space-around"
+    >
+      <Grid item xs={1}>
+        {user && <PLink token={token} />}
+      </Grid>
+      <Grid item xs={1}>
+        <h1>
+          Buddgetz
+        </h1>
+      </Grid>
       {
         user && (
-        <a href="/api/logout">
-          Logout
-        </a>
+        <Grid item xs={1}> 
+          <Button
+            variant="outlined"
+            color="primary"
+          >
+            <a href="/api/logout">
+              Logout
+            </a>
+          </Button>
+        </ Grid>
       )}
       {
         !user && (
-        <a href="/api/login">
-          Login
-        </a>
-
+          <Grid item xs={1}>
+            <Button
+              variant="contained"
+            >
+              <a href="/api/login">
+                Login
+              </a>
+            </Button>
+          </Grid>
       )}
-    </nav>
+    </Grid>
   )
 }
