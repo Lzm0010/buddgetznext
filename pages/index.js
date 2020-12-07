@@ -1,5 +1,5 @@
 import {useEffect, useContext, useState} from 'react';
-import {table, minifyRecords} from './api/utils/Airtable';
+import {table, categories_table, minifyRecords} from './api/utils/Airtable';
 import Navbar from '../components/Navbar';
 import Budget from '../components/Budget';
 import {LineItemsContext} from '../contexts/lineItemsContext';
@@ -9,7 +9,7 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 
 
-export default function Home({initialLineItems, user, token}) {
+export default function Home({initialLineItems, user, token, categories}) {
   const {lineItems, setLineItems} = useContext(LineItemsContext);
   // const [month, setMonth] = useState(new Date().getMonth() +1)
 
@@ -28,7 +28,7 @@ export default function Home({initialLineItems, user, token}) {
             {
               user && (
                 <Grid>
-                  <Budget lineItems={lineItems}/>
+                  <Budget lineItems={lineItems} categories={categories} />
                 </Grid>
               )
             }
@@ -44,6 +44,7 @@ export default function Home({initialLineItems, user, token}) {
 export async function getServerSideProps(context){
   const session = await auth0.getSession(context.req);
   let lineItems = [];
+  let categories = [];
   const client = new plaid.Client({
     clientID: process.env.PLAID_CLIENT_ID,
     secret: process.env.PLAID_SECRET,
@@ -56,6 +57,8 @@ export async function getServerSideProps(context){
       lineItems = await table.select({
         filterByFormula: `userId = '${session.user.sub}'`
       }).all();
+
+      categories = await categories_table.select({}).all();
 
       const linkTokenResponse = await client.createLinkToken({
         user: {
@@ -73,6 +76,7 @@ export async function getServerSideProps(context){
     return {
       props: {
         initialLineItems: minifyRecords(lineItems),
+        categories: minifyRecords(categories),
         user: session?.user || null,
         token: link_token
       }

@@ -2,7 +2,8 @@ import React from 'react';
 import LineItem from './LineItem';
 import {Grid, Paper} from '@material-ui/core';
 
-export default function Budget({lineItems}) {
+export default function Budget({lineItems, categories}) {
+
   const actualLineItems = lineItems.filter(lineItem => (
     lineItem.fields.itemType === 'actual'
   ));
@@ -10,6 +11,10 @@ export default function Budget({lineItems}) {
   const projectedLineItems = lineItems.filter(lineItem => (
     lineItem.fields.itemType === 'projected'
   ));
+
+  const displayCategories = () => {
+    return categories.map(cat => <div key={cat.id}>{cat.fields.name}</div>)
+  }
 
 //   <div>
 //   {lineItems && projectedLineItems.map(lineItem => (
@@ -43,6 +48,7 @@ export default function Budget({lineItems}) {
               <div>
                 Expenses
               </div>
+              {displayCategories()}
           </Grid>
           <Grid item xs={4}>
               <div>
@@ -51,6 +57,7 @@ export default function Budget({lineItems}) {
               <div>
                 Expenses
               </div>
+              {displayCategories()}
           </Grid>
           <Grid item xs={2}>
               <div>
@@ -59,6 +66,7 @@ export default function Budget({lineItems}) {
               <div>
                 Expenses
               </div>
+              {displayCategories()}
           </Grid>
       </Grid>
     </Paper>
