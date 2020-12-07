@@ -1,7 +1,7 @@
 import React, {useState, useContext} from 'react';
 import {LineItemsContext} from '../contexts/lineItemsContext';
 
-export default function LineItemForm () {
+export default function LineItemForm ({subcategory, itemType}) {
   const {addLineItem} = useContext(LineItemsContext);
 
   const [description, setDescription] = useState('');
@@ -10,7 +10,7 @@ export default function LineItemForm () {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addLineItem({description, date, total: Math.round(parseFloat(total) * 100) / 100});
+    addLineItem({subcategory, itemType, description, date, total: Math.round(parseFloat(total) * 100) / 100});
     setDescription('');
     setDate('');
     setTotal('');
