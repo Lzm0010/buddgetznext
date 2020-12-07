@@ -1,6 +1,7 @@
 import React from 'react';
 import LineItem from './LineItem';
-import {Grid, Paper} from '@material-ui/core';
+import {Grid, Paper, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core';
+import {ExpandMore} from '@material-ui/icons';
 
 export default function Budget({lineItems, categories}) {
 
@@ -13,7 +14,23 @@ export default function Budget({lineItems, categories}) {
   ));
 
   const displayCategories = () => {
-    return categories.map(cat => <div key={cat.id}>{cat.fields.name}</div>)
+    return categories.map(cat => (
+      <Accordion key={cat.id}>
+        <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content">
+          {cat.fields.name}
+        </AccordionSummary>
+        <AccordionDetails>
+          {lineItems
+            .filter(lineItem => lineItem.fields.subcategory === cat.fields.name)
+            .map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem} />)
+          }
+        </AccordionDetails>
+      </Accordion>
+    ))
+  }
+
+  const displayCategoriesDelta = () => {
+    return categories.map(cat => <Paper key={`d-${cat.id}`}>{cat.fields.name}</Paper>)
   }
 
 //   <div>
@@ -66,7 +83,7 @@ export default function Budget({lineItems, categories}) {
               <div>
                 Expenses
               </div>
-              {displayCategories()}
+              {displayCategoriesDelta()}
           </Grid>
       </Grid>
     </Paper>

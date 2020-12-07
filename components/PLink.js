@@ -25,7 +25,9 @@ export default function PLink ({token}) {
                 description: trans.name,
                 date: trans.date,
                 total: trans.amount,
-                itemType: 'actual'
+                itemType: 'actual',
+                subcategory: trans.category[0],
+                category: 'expense'
               })
             }
           });

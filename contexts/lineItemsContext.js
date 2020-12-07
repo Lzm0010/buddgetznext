@@ -10,7 +10,9 @@ const LineItemsProvider = ({children}) => {
     date, 
     total, 
     transactionId, 
-    itemType
+    itemType,
+    subcategory,
+    category
   }) => {
     try {
       const res = await fetch('/api/createLineItem', {
@@ -21,7 +23,9 @@ const LineItemsProvider = ({children}) => {
           date, 
           total, 
           transactionId,
-          itemType
+          itemType,
+          subcategory,
+          category
         })
       });
       const newItem = await res.json();
