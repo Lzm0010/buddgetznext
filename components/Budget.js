@@ -13,14 +13,14 @@ export default function Budget({lineItems, categories}) {
     lineItem.fields.itemType === 'projected'
   ));
 
-  const displayCategories = () => {
+  const displayCategories = (filteredLineItems) => {
     return categories.map(cat => (
       <Accordion key={cat.id}>
         <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content">
           {cat.fields.name}
         </AccordionSummary>
         <AccordionDetails>
-          {lineItems
+          {filteredLineItems
             .filter(lineItem => lineItem.fields.subcategory === cat.fields.name)
             .map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem} />)
           }
@@ -65,7 +65,7 @@ export default function Budget({lineItems, categories}) {
               <div>
                 Expenses
               </div>
-              {displayCategories()}
+              {displayCategories(projectedLineItems)}
           </Grid>
           <Grid item xs={4}>
               <div>
@@ -74,7 +74,7 @@ export default function Budget({lineItems, categories}) {
               <div>
                 Expenses
               </div>
-              {displayCategories()}
+              {displayCategories(actualLineItems)}
           </Grid>
           <Grid item xs={2}>
               <div>
