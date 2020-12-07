@@ -1,9 +1,27 @@
 import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import LineItem from './LineItem';
-import {Grid, Paper, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core';
+import {Grid, Paper, Accordion, AccordionSummary, AccordionDetails, Typography} from '@material-ui/core';
 import {ExpandMore} from '@material-ui/icons';
 
+const useStyles = makeStyles((theme) => ({
+  deltaContent: {
+    display: "flex",
+    flexGrow: 1,
+    margin: "12px 0",
+    fontSize: "0.875rem",
+    fontWeight: 400,
+    lineHeight: 1.43,
+  },
+  delta: {
+    display: "flex",
+    padding: "0px 16px",
+    minHeight: "48px",
+  }
+}));
+
 export default function Budget({lineItems, categories}) {
+  const classes = useStyles();
 
   const actualLineItems = lineItems.filter(lineItem => (
     lineItem.fields.itemType === 'actual'
@@ -44,8 +62,10 @@ export default function Budget({lineItems, categories}) {
 
 
     return categories.map(cat => (
-      <Paper key={`d-${cat.id}`}>
-        {cat.fields.name} {delta(cat)}
+      <Paper key={`d-${cat.id}`} className={classes.delta}>
+        <Typography className={classes.deltaContent}>
+          {cat.fields.name} {delta(cat)}
+        </Typography>
       </Paper>
     ));
   }
@@ -62,7 +82,7 @@ export default function Budget({lineItems, categories}) {
           <Grid item xs={4}>
             Actual
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
             Delta
           </Grid>
       </Grid>
@@ -87,7 +107,7 @@ export default function Budget({lineItems, categories}) {
               </div>
               {displayCategories(actualLineItems)}
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={4}>
               <div>
                 Income
               </div>
