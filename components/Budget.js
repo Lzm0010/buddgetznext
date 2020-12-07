@@ -14,16 +14,22 @@ export default function Budget({lineItems, categories}) {
   ));
 
   const displayCategories = (filteredLineItems) => {
+    const lineItems = (cat) => filteredLineItems
+      .filter(lineItem => lineItem.fields.subcategory === cat.fields.name)
+      .map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem} />)
+
+    const sum = (cat) => filteredLineItems
+      .filter(lineItem => lineItem.fields.subcategory === cat.fields.name)
+      .reduce((total, lineItem) => total + lineItem.fields.total, 0)
+
+
     return categories.map(cat => (
       <Accordion key={cat.id}>
         <AccordionSummary expandIcon={<ExpandMore/>} aria-controls="panel1a-content">
-          {cat.fields.name}
+          {cat.fields.name} {sum(cat)}
         </AccordionSummary>
         <AccordionDetails>
-          {filteredLineItems
-            .filter(lineItem => lineItem.fields.subcategory === cat.fields.name)
-            .map(lineItem => <LineItem key={lineItem.id} lineItem={lineItem} />)
-          }
+          {lineItems(cat)}
         </AccordionDetails>
       </Accordion>
     ))
@@ -32,12 +38,6 @@ export default function Budget({lineItems, categories}) {
   const displayCategoriesDelta = () => {
     return categories.map(cat => <Paper key={`d-${cat.id}`}>{cat.fields.name}</Paper>)
   }
-
-//   <div>
-//   {lineItems && projectedLineItems.map(lineItem => (
-//     <LineItem key={lineItem.id} lineItem={lineItem}/>
-//   ))}
-// </div>
 
   return (
     <Paper>
