@@ -88,8 +88,6 @@ export default function Home({initialLineItems, user, token, categories, current
               user && (
                 
                 <Grid>
-                   {console.log(lineItems)}
-                  {console.log(filteredLineItems())}
                   <Budget lineItems={filteredLineItems()} categories={categories} />
                 </Grid>
               )

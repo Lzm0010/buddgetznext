@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   headers:{
     textAlign: "center"
   },
-  deltaContent: {
+  paperContent: {
     display: "flex",
     flexGrow: 1,
     margin: "12px 0",
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     lineHeight: 1.43,
   },
-  delta: {
+  myPaper: {
     borderRadius: 0,
     display: "flex",
     padding: "0px 16px",
@@ -57,7 +57,7 @@ export default function Budget({lineItems, categories}) {
         </AccordionSummary>
 
         <AccordionDetails>
-          <LineItemForm subcategory={cat.fields.name} itemType={itemType}/>
+          <LineItemForm category="expense" subcategory={cat.fields.name} itemType={itemType}/>
           {lineItems(cat)}
         </AccordionDetails>
 
@@ -66,14 +66,13 @@ export default function Budget({lineItems, categories}) {
   }
 
   const displayCategoriesDelta = () => {
-    
     const projectedSum = (cat) => sum(cat, projectedLineItems);
     const actualSum = (cat) => sum(cat, actualLineItems);
     const delta = (cat) => projectedSum(cat) - actualSum(cat);
 
     return categories.map(cat => (
-      <Paper key={`d-${cat.id}`} className={classes.delta}>
-        <Typography className={classes.deltaContent}>
+      <Paper key={`d-${cat.id}`} className={classes.myPaper}>
+        <Typography className={classes.paperContent}>
           {cat.fields.name} {delta(cat)}
         </Typography>
       </Paper>
@@ -105,30 +104,43 @@ export default function Budget({lineItems, categories}) {
         container
       >
           <Grid item xs={4}> 
-              <div>
-                Income
-              </div>
-              <div>
-                Expenses
-              </div>
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Income
+                </Typography>
+              </Paper>
+              {/* <LineItemForm category="income" itemType="projected" /> */}
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Expenses
+                </Typography>
+              </Paper>
               {displayCategories(projectedLineItems)}
           </Grid>
           <Grid item xs={4}>
-              <div>
-                Income
-              </div>
-              <div>
-                Expenses
-              </div>
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Income
+                </Typography>
+              </Paper>
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Expenses
+                </Typography>
+              </Paper>
               {displayCategories(actualLineItems)}
           </Grid>
           <Grid item xs={4}>
-              <div>
-                Income
-              </div>
-              <div>
-                Expenses
-              </div>
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Income
+                </Typography>
+              </Paper>
+              <Paper className={classes.myPaper}>
+                <Typography>
+                  Expenses
+                </Typography>
+              </Paper>
               {displayCategoriesDelta()}
           </Grid>
       </Grid>
