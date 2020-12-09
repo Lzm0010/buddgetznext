@@ -30,6 +30,17 @@ export default function Home({initialLineItems, user, token, categories, current
     setLineItems(initialLineItems);
   }, [])
 
+  const prevMonth = () => {
+    const newMonth = month !== 1 ? month - 1 : 12;
+    setMonth(newMonth);
+  }
+
+  const nextMonth = () => {
+    const newMonth = month !== 12 ? month + 1 : 1;
+    setMonth(newMonth);
+  }
+
+
   return (
     <main>
       <Container>
@@ -49,7 +60,7 @@ export default function Home({initialLineItems, user, token, categories, current
 
           {/* THIRD ROW - MAIN CONTENT */}
           <Grid item xs={1}>
-            <IconButton>
+            <IconButton onClick={prevMonth}>
               <ArrowBackIosIcon fontSize="large"/>
             </IconButton>
           </Grid>
@@ -67,7 +78,7 @@ export default function Home({initialLineItems, user, token, categories, current
           </Grid>
 
           <Grid item xs={1}>
-            <IconButton>
+            <IconButton onClick={nextMonth}>
               <ArrowForwardIosIcon fontSize="large"/>
             </IconButton>
           </Grid>
