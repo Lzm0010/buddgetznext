@@ -5,13 +5,26 @@ import Budget from '../components/Budget';
 import {LineItemsContext} from '../contexts/lineItemsContext';
 import auth0 from './api/utils/auth0';
 import plaid from 'plaid';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { Typography } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  month: {
+    textAlign: "center"
+  },
+}));
 
 
-export default function Home({initialLineItems, user, token, categories}) {
+export default function Home({initialLineItems, user, token, categories, currentMonth}) {
+  const classes = useStyles();
   const {lineItems, setLineItems} = useContext(LineItemsContext);
-  // const [month, setMonth] = useState(new Date().getMonth() +1)
+  const [month, setMonth] = useState(currentMonth);
+ 
 
   useEffect(() => {
     setLineItems(initialLineItems);
@@ -20,13 +33,31 @@ export default function Home({initialLineItems, user, token, categories}) {
   return (
     <main>
       <Container>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} alignItems="center">
+
+          {/* FIRST ROW - NAVBAR */}
           <Grid item xs={12}>
             <Navbar user={user} token={token}/>
           </Grid>
-          <Grid item xs={12}>
+
+          {/* SECOND ROW - MONTH */}
+          <Grid item xs={12} className={classes.month}>
+            <Typography variant="h2">
+              {month}
+            </Typography>
+          </Grid>
+
+          {/* THIRD ROW - MAIN CONTENT */}
+          <Grid item xs={1}>
+            <IconButton>
+              <ArrowBackIosIcon fontSize="large"/>
+            </IconButton>
+          </Grid>
+
+          <Grid item xs={10}>
             {
               user && (
+              
                 <Grid>
                   <Budget lineItems={lineItems} categories={categories} />
                 </Grid>
@@ -34,6 +65,13 @@ export default function Home({initialLineItems, user, token, categories}) {
             }
             {!user && <p>Login in to save your budgets!</p>}
           </Grid>
+
+          <Grid item xs={1}>
+            <IconButton>
+              <ArrowForwardIosIcon fontSize="large"/>
+            </IconButton>
+          </Grid>
+          {/* END SECOND ROW - MAIN CONTENT */}
 
         </Grid>
       </Container>
@@ -78,7 +116,8 @@ export async function getServerSideProps(context){
         initialLineItems: minifyRecords(lineItems),
         categories: minifyRecords(categories),
         user: session?.user || null,
-        token: link_token
+        token: link_token,
+        currentMonth: new Date().getMonth() + 1,
       }
     }
   } catch (err){
