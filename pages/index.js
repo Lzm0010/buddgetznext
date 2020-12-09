@@ -30,6 +30,21 @@ export default function Home({initialLineItems, user, token, categories, current
     setLineItems(initialLineItems);
   }, [])
 
+  const numToMonth = {
+    1: 'January',
+    2: 'February',
+    3: 'March',
+    4: 'April',
+    5: 'May',
+    6: 'June',
+    7: 'July',
+    8: 'August',
+    9: 'September',
+    10: 'October',
+    11: 'November',
+    12: 'December'
+  }
+
   const prevMonth = () => {
     const newMonth = month !== 1 ? month - 1 : 12;
     setMonth(newMonth);
@@ -54,7 +69,7 @@ export default function Home({initialLineItems, user, token, categories, current
           {/* SECOND ROW - MONTH */}
           <Grid item xs={12} className={classes.month}>
             <Typography variant="h2">
-              {month}
+              {numToMonth[month]}
             </Typography>
           </Grid>
 
