@@ -4,7 +4,7 @@ import { LineItemsContext } from '../contexts/lineItemsContext';
 import Button from '@material-ui/core/Button';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 
-export default function PLink ({token}) {
+export default function PLink ({token, month}) {
   const {lineItems, addLineItem} = useContext(LineItemsContext);
 
   const onSuccess = useCallback(

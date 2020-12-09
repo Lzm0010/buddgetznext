@@ -19,12 +19,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function Home({initialLineItems, user, token, categories, currentMonth}) {
   const classes = useStyles();
   const {lineItems, setLineItems} = useContext(LineItemsContext);
   const [month, setMonth] = useState(currentMonth);
- 
 
   useEffect(() => {
     setLineItems(initialLineItems);
@@ -55,6 +53,11 @@ export default function Home({initialLineItems, user, token, categories, current
     setMonth(newMonth);
   }
 
+  const filteredLineItems = () => {
+    return lineItems.filter(item => {
+      return item.fields.date.slice(5,7) == month;
+    })
+  }
 
   return (
     <main>
@@ -63,7 +66,7 @@ export default function Home({initialLineItems, user, token, categories, current
 
           {/* FIRST ROW - NAVBAR */}
           <Grid item xs={12}>
-            <Navbar user={user} token={token}/>
+            <Navbar user={user} token={token} month={month}/>
           </Grid>
 
           {/* SECOND ROW - MONTH */}
@@ -83,9 +86,11 @@ export default function Home({initialLineItems, user, token, categories, current
           <Grid item xs={10}>
             {
               user && (
-              
+                
                 <Grid>
-                  <Budget lineItems={lineItems} categories={categories} />
+                   {console.log(lineItems)}
+                  {console.log(filteredLineItems())}
+                  <Budget lineItems={filteredLineItems()} categories={categories} />
                 </Grid>
               )
             }

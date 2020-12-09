@@ -3,7 +3,7 @@ import PLink from './PLink';
 import Button from '@material-ui/core/Button';
 import {Grid} from '@material-ui/core';
 
-export default function Navbar({user, token}){
+export default function Navbar({user, token, month}){
 
   return (
     <Grid 
@@ -13,7 +13,7 @@ export default function Navbar({user, token}){
       justify="space-around"
     >
       <Grid item xs={1}>
-        {user && <PLink token={token} />}
+        {user && <PLink token={token} month={month} />}
       </Grid>
       <Grid item xs={1}>
         <h1>
